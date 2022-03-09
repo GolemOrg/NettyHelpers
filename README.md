@@ -35,7 +35,7 @@ This interface implements the `Encodable` interface and overrides it with a defa
 Lastly, there are extensions. For the `ByteBuf` type, it adds support for these extensions:
 - `ByteBuf.readAddress(): InetSocketAddress`
 - `ByteBuf.readToByteArray(length: Int): ByteArray` - Given a length, it reads the next `length` bytes from the buffer and returns them as a byte array.
-- `ByteBuf.split(maxSize: Int): MutableList<ByteBuf>` - Given a max size, it splits the buffer into multiple buffers each equalling or less than the max size.
+- `ByteBuf.split(maxSize: Int): MutableList<ByteBuf>` - Given a max size, it splits the buffer into multiple buffers each equaling or less than the max size.
 
 Internally, there are extensions for all types (`Any?`). These are used in the `OrderedEncodable` interface as 
 a way to automatically encode each field using `field.encode(buffer)`
