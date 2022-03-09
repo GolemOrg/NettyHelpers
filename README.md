@@ -1,6 +1,7 @@
 # Netty Helpers
 
 This is a small Kotlin library used to enhance Netty's functionality by adding types, interfaces, and extensions.
+NOTE: The encoding / decoding here is used specifically for the [`RakNet`](https://github.com/GolemOrg/RakNet) library.
 
 ## Little Endian
 For types, it adds support for these little endian types:
