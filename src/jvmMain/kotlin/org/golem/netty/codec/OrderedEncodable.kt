@@ -4,12 +4,7 @@ import io.netty.buffer.ByteBuf
 import org.golem.netty.readAddress
 import org.golem.netty.readToByteArray
 import org.golem.netty.writeAddress
-import java.net.Inet4Address
-import java.net.Inet6Address
-import java.net.InetAddress
 import java.net.InetSocketAddress
-import kotlin.experimental.and
-import kotlin.experimental.inv
 
 interface OrderedEncodable: Encodable {
     fun encodeOrder(): Array<Any>
