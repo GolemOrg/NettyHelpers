@@ -1,7 +1,9 @@
 package org.golem.netty.codec
 
 import io.netty.buffer.ByteBuf
+import org.golem.netty.readAddress
 import org.golem.netty.readToByteArray
+import org.golem.netty.writeAddress
 import java.net.Inet4Address
 import java.net.Inet6Address
 import java.net.InetAddress
@@ -31,6 +33,7 @@ fun Any?.decode(buffer: ByteBuf): Any? {
         is Boolean -> buffer.readBoolean()
         is ByteArray -> buffer.readToByteArray(this.size)
         is ByteBuf -> buffer.readBytes(this)
+        is InetSocketAddress -> buffer.readAddress()
         is Decodable -> this.decode(buffer)
         else -> null
     }
@@ -47,28 +50,8 @@ fun Any?.encode(buffer: ByteBuf) {
         is Double -> buffer.writeDouble(this)
         is ByteArray -> buffer.writeBytes(this)
         is ByteBuf -> buffer.writeBytes(this)
+        is InetSocketAddress -> buffer.writeAddress(this)
         is Encodable -> this.encode(buffer)
-        is InetSocketAddress -> {
-            when (val inner: InetAddress = this.address) {
-                is Inet4Address -> {
-                    buffer.writeByte(4) //IPv4
-                    val result = ByteArray(inner.address.size)
-                    for (i in 0 until inner.address.size) {
-                        result[i] = (inner.address[i] and 0xFF.toByte()).inv()
-                    }
-                    buffer.writeBytes(result)
-                    buffer.writeShort(this.port)
-                }
-                is Inet6Address -> {
-                    buffer.writeByte(6) // IPv6
-                    buffer.writeShortLE(10) // AF_INET6
-                    buffer.writeShort(this.port)
-                    buffer.writeInt(0) // Flow info
-                    buffer.writeBytes(inner.address)
-                    buffer.writeInt(inner.scopeId)
-                }
-            }
-        }
         is Array<*> -> this.forEach { it.encode(buffer) }
         is List<*> -> this.forEach { it.encode(buffer) }
         else -> {

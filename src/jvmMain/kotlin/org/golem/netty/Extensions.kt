@@ -2,6 +2,9 @@ package org.golem.netty
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufAllocator
+import org.golem.netty.codec.encode
+import java.net.Inet4Address
+import java.net.Inet6Address
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import kotlin.experimental.and
@@ -25,6 +28,28 @@ fun ByteBuf.readAddress(): InetSocketAddress {
         else -> throw IllegalArgumentException("Unknown address type $type")
     }
     return InetSocketAddress(InetAddress.getByAddress(addressBytes), port)
+}
+
+fun ByteBuf.writeAddress(address: InetSocketAddress) {
+    when (val inner: InetAddress = address.address) {
+        is Inet4Address -> {
+            this.writeByte(4) //IPv4
+            val result = ByteArray(inner.address.size)
+            for (i in 0 until inner.address.size) {
+                result[i] = (inner.address[i] and 0xFF.toByte()).inv()
+            }
+            this.writeBytes(result)
+            this.writeShort(address.port)
+        }
+        is Inet6Address -> {
+            this.writeByte(6) // IPv6
+            this.writeShortLE(10) // AF_INET6
+            this.writeShort(address.port)
+            this.writeInt(0) // Flow info
+            this.writeBytes(inner.address)
+            this.writeInt(inner.scopeId)
+        }
+    }
 }
 
 fun ByteBuf.readToByteArray(length: Int): ByteArray {
