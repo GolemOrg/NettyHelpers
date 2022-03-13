@@ -24,7 +24,7 @@ For types, it adds support for these var encoding types:
 - UVarInt
 - UVarLong
 
-More information about this var encoding can be found [here](https://developers.google.com/protocol-buffers/docs/encoding).
+More information about var encoding can be found [here](https://developers.google.com/protocol-buffers/docs/encoding).
 
 
 ## Interfaces
