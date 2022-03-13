@@ -17,6 +17,15 @@ All little endian versions of these types are suffixed with `LE` (e.g. `IntLE`).
 
 Further support for more types will occur in the future.
 
+## Var Encoding
+For types, it adds support for these var encoding types:
+- VarInt
+- VarLong
+- UVarInt
+- UVarLong
+
+More information about this var encoding can be found [here](https://developers.google.com/protocol-buffers/docs/encoding).
+
 
 ## Interfaces
 For interfaces, it adds support three interfaces.
@@ -34,6 +43,15 @@ This interface implements the `Encodable` interface and overrides it with a defa
 ## Extensions
 Lastly, there are extensions. For the `ByteBuf` type, it adds support for these extensions:
 - `ByteBuf.readAddress(): InetSocketAddress`
+- `ByteBuf.writeAddress(address: InetSocketAddress): ByteBuf`
+- `ByteBuf.readVarInt(): VarInt`
+- `ByteBuf.writeVarInt(value: Int): ByteBuf`
+- `ByteBuf.readVarLong(): VarLong`
+- `ByteBuf.writeVarLong(value: Long): ByteBuf`
+- `ByteBuf.readUVarInt(): UVarInt`
+- `ByteBuf.writeUVarInt(value: UInt): ByteBuf`
+- `ByteBuf.readUVarLong(): UVarLong`
+- `ByteBuf.writeUVarLong(value: ULong): ByteBuf`
 - `ByteBuf.readToByteArray(length: Int): ByteArray` - Given a length, it reads the next `length` bytes from the buffer and returns them as a byte array.
 - `ByteBuf.split(maxSize: Int): MutableList<ByteBuf>` - Given a max size, it splits the buffer into multiple buffers each equaling or less than the max size.
 
