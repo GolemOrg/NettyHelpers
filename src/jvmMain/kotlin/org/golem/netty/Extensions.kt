@@ -74,30 +74,46 @@ fun ByteBuf.split(maxSize: Int): MutableList<ByteBuf> {
 }
 
 fun ByteBuf.writeVarInt(value: Int): ByteBuf {
-    value.toVarInt().encode(this)
+    val wrappedValue = value.toVarInt()
+    wrappedValue.encode(this)
     return this
 }
 
-fun ByteBuf.readVarInt() = VarInt(0).decode(this)
+fun ByteBuf.readVarInt(): Int {
+    val value = VarInt(0)
+    return value.decode(this).toInt()
+}
 
 fun ByteBuf.writeUnsignedVarInt(value: UInt): ByteBuf {
-    value.toUVarInt().encode(this)
+    val wrappedValue = value.toUVarInt()
+    wrappedValue.encode(this)
     return this
 }
 
-fun ByteBuf.readUnsignedVarInt() = UVarInt(0u).decode(this)
+fun ByteBuf.readUnsignedVarInt(): UInt {
+    val value = UVarInt(0u)
+    return value.decode(this).toUInt()
+}
 
 
 fun ByteBuf.writeVarLong(value: Long): ByteBuf {
-    VarLong(value).encode(this)
+    val wrappedValue = value.toVarLong()
+    wrappedValue.encode(this)
     return this
 }
 
-fun ByteBuf.readVarLong() = VarLong(0L).decode(this)
+fun ByteBuf.readVarLong(): Long {
+    val value = VarLong(0L)
+    return value.decode(this).toLong()
+}
 
 fun ByteBuf.writeUnsignedVarLong(value: ULong): ByteBuf {
-    UVarLong(value).encode(this)
+    val wrappedValue = value.toUVarLong()
+    wrappedValue.encode(this)
     return this
 }
 
-fun ByteBuf.readUnsignedVarLong() = UVarLong(0uL).decode(this)
+fun ByteBuf.readUnsignedVarLong(): ULong {
+    val value = UVarLong(0uL)
+    return value.decode(this).toULong()
+}

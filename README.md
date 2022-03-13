@@ -44,13 +44,13 @@ This interface implements the `Encodable` interface and overrides it with a defa
 Lastly, there are extensions. For the `ByteBuf` type, it adds support for these extensions:
 - `ByteBuf.readAddress(): InetSocketAddress`
 - `ByteBuf.writeAddress(address: InetSocketAddress): ByteBuf`
-- `ByteBuf.readVarInt(): VarInt`
+- `ByteBuf.readVarInt(): Int`
 - `ByteBuf.writeVarInt(value: Int): ByteBuf`
 - `ByteBuf.readVarLong(): VarLong`
 - `ByteBuf.writeVarLong(value: Long): ByteBuf`
-- `ByteBuf.readUVarInt(): UVarInt`
+- `ByteBuf.readUVarInt(): UInt`
 - `ByteBuf.writeUVarInt(value: UInt): ByteBuf`
-- `ByteBuf.readUVarLong(): UVarLong`
+- `ByteBuf.readUVarLong(): ULong`
 - `ByteBuf.writeUVarLong(value: ULong): ByteBuf`
 - `ByteBuf.readToByteArray(length: Int): ByteArray` - Given a length, it reads the next `length` bytes from the buffer and returns them as a byte array.
 - `ByteBuf.split(maxSize: Int): MutableList<ByteBuf>` - Given a max size, it splits the buffer into multiple buffers each equaling or less than the max size.
