@@ -3,6 +3,7 @@ package org.golem.netty
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufAllocator
 import org.golem.netty.codec.encode
+import org.golem.netty.types.*
 import java.net.Inet4Address
 import java.net.Inet6Address
 import java.net.InetAddress
@@ -71,3 +72,32 @@ fun ByteBuf.split(maxSize: Int): MutableList<ByteBuf> {
     splitBuffers.add(current)
     return splitBuffers
 }
+
+fun ByteBuf.writeVarInt(value: Int): ByteBuf {
+    value.toVarInt().encode(this)
+    return this
+}
+
+fun ByteBuf.readVarInt() = VarInt(0).decode(this)
+
+fun ByteBuf.writeUnsignedVarInt(value: UInt): ByteBuf {
+    value.toUVarInt().encode(this)
+    return this
+}
+
+fun ByteBuf.readUnsignedVarInt() = UVarInt(0u).decode(this)
+
+
+fun ByteBuf.writeVarLong(value: Long): ByteBuf {
+    VarLong(value).encode(this)
+    return this
+}
+
+fun ByteBuf.readVarLong() = VarLong(0L).decode(this)
+
+fun ByteBuf.writeUnsignedVarLong(value: ULong): ByteBuf {
+    UVarLong(value).encode(this)
+    return this
+}
+
+fun ByteBuf.readUnsignedVarLong() = UVarLong(0uL).decode(this)
